@@ -18,8 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DashBoardAdapter extends ListAdapter<BaseTask, RecyclerView.ViewHolder> {
-
-    private static final String TAG = "DashBoardAdapter";
     private List<BaseTask> baseTaskList = new ArrayList<>();
 
     public DashBoardAdapter() {
@@ -66,17 +64,11 @@ public class DashBoardAdapter extends ListAdapter<BaseTask, RecyclerView.ViewHol
     private static DiffUtil.ItemCallback<BaseTask> UserDiffCallback = new DiffUtil.ItemCallback<BaseTask>() {
         @Override
         public boolean areItemsTheSame(@NonNull BaseTask oldItem, @NonNull BaseTask newItem) {
-            Log.i(TAG, "areItemsTheSame() called with: oldItem = [" + oldItem.getTaskId()
-                    + "], newItem = [" + newItem.getTaskId() + "] res: "
-                    + oldItem.getTaskId().equals(newItem.getTaskId())
-                    + " same? " + oldItem.equals(newItem));
             return oldItem.getTaskId().equals(newItem.getTaskId());
         }
 
         @Override
         public boolean areContentsTheSame(@NonNull BaseTask oldItem, @NonNull BaseTask newItem) {
-            Log.w(TAG, "areContentsTheSame() called with: oldItem = [" + oldItem
-                    + "], newItem = [" + newItem + "]");
             return oldItem.equals(newItem);
         }
     };
