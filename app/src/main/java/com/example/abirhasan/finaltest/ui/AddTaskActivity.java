@@ -108,7 +108,7 @@ public class AddTaskActivity extends AppCompatActivity {
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra(Constants.KEY_EDIT_TASK)) {
             baseTask = intent.getParcelableExtra(Constants.KEY_EDIT_TASK);
-            setTitle("Edit Task");
+            setTitle(R.string.edit_task);
             tvPickDate.setVisibility(View.GONE);
             btnAddTask.setVisibility(View.GONE);
             spStatus.setVisibility(View.VISIBLE);
@@ -118,6 +118,7 @@ public class AddTaskActivity extends AppCompatActivity {
             setTaskStatuses(baseTask.getStatus());
             setPriorities(baseTask.getPriority());
         } else {
+            setTitle(R.string.add_task);
             setPriorities(0);
         }
     }

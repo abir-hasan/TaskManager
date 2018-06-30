@@ -40,7 +40,6 @@ import butterknife.OnClick;
 import butterknife.OnItemSelected;
 
 public class DashBoardActivity extends AppCompatActivity {
-    private static final String TAG = "DashBoardActivity";
     private String selectedDate;
     private String user;
     @BindView(R.id.fabAddTask)
@@ -60,7 +59,7 @@ public class DashBoardActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dash_board);
-        setTitle("Task Board");
+        setTitle(R.string.task_board);
         initDependency();
         ButterKnife.bind(this);
         user = AppUtils.getUser(this);
@@ -90,7 +89,6 @@ public class DashBoardActivity extends AppCompatActivity {
                     ArrayAdapter<String> adapter = new ArrayAdapter<>(DashBoardActivity.this,
                             R.layout.support_simple_spinner_dropdown_item, strings);
                     spTaskDates.setAdapter(adapter);
-                    //spTaskDates.setSelection(strings.size() - 1);
                 }
             }
         });
@@ -100,7 +98,6 @@ public class DashBoardActivity extends AppCompatActivity {
         viewModel.getMessageListLiveData(user, taskDate, reference).observe(this, new Observer<List<BaseTask>>() {
             @Override
             public void onChanged(@Nullable List<BaseTask> baseTasks) {
-                Log.d(TAG, "onChanged() called with: baseTasks = [" + baseTasks.size() + "]");
                 List<BaseTask> tasks = new ArrayList<>(baseTasks);
                 adapter.setData(tasks);
             }
@@ -111,7 +108,6 @@ public class DashBoardActivity extends AppCompatActivity {
     public void onItemSelect(AdapterView<?> parent, View view, int position, long id) {
         selectedDate = String.valueOf(parent.getAdapter().getItem(position));
         observeData(selectedDate);
-        Log.d(TAG, "onItemSelect: " + selectedDate);
     }
 
     @OnClick(R.id.fabAddTask)

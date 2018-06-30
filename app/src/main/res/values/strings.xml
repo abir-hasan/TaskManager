@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">FinalTest</string>
+    <string name="task_board">Task Board</string>
+    <string name="status_board">Status Board</string>
+    <string name="edit_task">Edit Task"</string>
+    <string name="add_task">Add Task"</string>
 
     <string-array name="priorities">
         <item>Important &amp; Urgent</item>

@@ -33,7 +33,6 @@ import butterknife.ButterKnife;
 import butterknife.OnItemSelected;
 
 public class StatusBoardActivity extends AppCompatActivity {
-    private static final String TAG = "StatusBoardActivity";
     private Status taskStatus;
     private String taskDate;
     private String user;
@@ -53,7 +52,7 @@ public class StatusBoardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_status_board);
         ButterKnife.bind(this);
-        setTitle("Status Board");
+        setTitle(R.string.status_board);
         initDependency();
         ButterKnife.bind(this);
         user = AppUtils.getUser(this);
@@ -95,7 +94,6 @@ public class StatusBoardActivity extends AppCompatActivity {
                 new Observer<List<BaseTask>>() {
                     @Override
                     public void onChanged(@Nullable List<BaseTask> baseTasks) {
-                        Log.d(TAG, "onChanged() called with: baseTasks = [" + baseTasks.size() + "]");
                         List<BaseTask> tasks = new ArrayList<>(baseTasks);
                         adapter.setData(tasks);
                     }

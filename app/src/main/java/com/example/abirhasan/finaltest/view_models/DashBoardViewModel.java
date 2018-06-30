@@ -24,7 +24,6 @@ import java.util.Collections;
 import java.util.List;
 
 public class DashBoardViewModel extends ViewModel {
-    private static final String TAG = "DashBoardViewModel";
     private FirebaseQueryLiveData mLiveData;
     private List<BaseTask> mList = new ArrayList<>();
     private List<String> taskDates = new ArrayList<>();
@@ -46,7 +45,6 @@ public class DashBoardViewModel extends ViewModel {
     private class Deserializer implements Function<DataSnapshot, List<BaseTask>> {
         @Override
         public List<BaseTask> apply(DataSnapshot dataSnapshot) {
-            Log.w(TAG, "apply() called with: dataSnapshot = [" + dataSnapshot + "]");
             mList.clear();
             isFirstImpUrg = true;
             isFirstNotImpUrg = true;
@@ -73,7 +71,6 @@ public class DashBoardViewModel extends ViewModel {
                 }
                 mList.add(msg);
             }
-            Log.e(TAG, "apply()  size: " + mList.size());
             return mList;
         }
     }
@@ -95,7 +92,6 @@ public class DashBoardViewModel extends ViewModel {
                 if (prevSize == taskDates.size()) return; // Ignore same date list
                 taskDates.clear();
                 for (DataSnapshot snap : dataSnapshot.getChildren()) {
-                    Log.i(TAG, "onDataChange: date: " + snap.getKey() + " val: " + snap.getValue());
                     taskDates.add(snap.getKey());
                 }
                 Collections.sort(taskDates, new StringDateComparator());
