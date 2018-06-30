@@ -9,6 +9,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 import com.example.abirhasan.finaltest.R;
 import com.example.abirhasan.finaltest.dagger.dashboard_activity.DaggerDashBoardActivityComponent;
@@ -28,13 +32,17 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnItemSelected;
 
 public class DashBoardActivity extends AppCompatActivity {
     private static final String TAG = "DashBoardActivity";
+    private String user;
     @BindView(R.id.fabAddTask)
     FloatingActionButton fabAddTask;
     @BindView(R.id.rvDashboard)
     RecyclerView rvDashboard;
+    @BindView(R.id.spTaskDates)
+    Spinner spTaskDates;
     @Inject
     DatabaseReference reference;
     @Inject
@@ -48,8 +56,9 @@ public class DashBoardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_dash_board);
         initDependency();
         ButterKnife.bind(this);
+        user = AppUtils.getUser(this);
         setUI();
-        observeData();
+        getUserSpecificTaskDates();
     }
 
     private void setUI() {
@@ -65,9 +74,22 @@ public class DashBoardActivity extends AppCompatActivity {
         activityComponent.inject(this);
     }
 
-    private void observeData() {
-        String user = AppUtils.getUser(this);
-        viewModel.getMessageListLiveData(user, reference).observe(this, new Observer<List<BaseTask>>() {
+    private void getUserSpecificTaskDates() {
+        viewModel.getUserTaskDates(user, reference).observe(this, new Observer<List<String>>() {
+            @Override
+            public void onChanged(@Nullable List<String> strings) {
+                if (strings != null) {
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(DashBoardActivity.this,
+                            R.layout.support_simple_spinner_dropdown_item, strings);
+                    spTaskDates.setAdapter(adapter);
+                    //spTaskDates.setSelection(strings.size() - 1);
+                }
+            }
+        });
+    }
+
+    private void observeData(String taskDate) {
+        viewModel.getMessageListLiveData(user, taskDate, reference).observe(this, new Observer<List<BaseTask>>() {
             @Override
             public void onChanged(@Nullable List<BaseTask> baseTasks) {
                 Log.d(TAG, "onChanged() called with: baseTasks = [" + baseTasks.size() + "]");
@@ -77,6 +99,12 @@ public class DashBoardActivity extends AppCompatActivity {
         });
     }
 
+    @OnItemSelected(R.id.spTaskDates)
+    public void onItemSelect(AdapterView<?> parent, View view, int position, long id) {
+        String value = String.valueOf(parent.getAdapter().getItem(position));
+        observeData(value);
+        Log.d(TAG, "onItemSelect: " + value);
+    }
 
     @OnClick(R.id.fabAddTask)
     public void onAddTaskClick() {

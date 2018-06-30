@@ -1,10 +1,10 @@
 package com.example.abirhasan.finaltest.enums;
 
 public enum TaskPriority {
-    IMP_URG(3),
-    NOT_IMP_URG(2),
-    IMP_NOT_URG(1),
-    NOT_IMP_NOT_URG(0);
+    IMP_URG(0),
+    NOT_IMP_URG(1),
+    IMP_NOT_URG(2),
+    NOT_IMP_NOT_URG(3);
 
     private int status;
 
@@ -18,13 +18,13 @@ public enum TaskPriority {
 
     public static TaskPriority parse(int status) {
         switch (status) {
-            case 3:
-                return IMP_URG;
-            case 2:
-                return NOT_IMP_URG;
-            case 1:
-                return IMP_NOT_URG;
             case 0:
+                return IMP_URG;
+            case 1:
+                return NOT_IMP_URG;
+            case 2:
+                return IMP_NOT_URG;
+            case 3:
                 return NOT_IMP_NOT_URG;
             default:
                 return NOT_IMP_NOT_URG;

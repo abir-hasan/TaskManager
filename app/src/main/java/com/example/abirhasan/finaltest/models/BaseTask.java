@@ -14,6 +14,16 @@ public class BaseTask {
     private TaskPriority priority;
     private Status status;
 
+    public boolean isSection() {
+        return isSection;
+    }
+
+    public void setSection(boolean section) {
+        isSection = section;
+    }
+
+    private transient boolean isSection;
+
     public String getTaskId() {
         return taskId;
     }

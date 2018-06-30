@@ -25,10 +25,10 @@ public class AddTaskViewModel extends ViewModel {
 
     public void addTask(DatabaseReference dbRef, String user, String taskName, String taskDetails,
                         String dateValue, long dueDate, boolean hasAlarms, TaskPriority priority) {
-        userRef = dbRef.child(Constants.NODE_USERS).child(user).child(Constants.NODE_TASKS);
+        userRef = dbRef.child(Constants.NODE_USERS).child(user).child(Constants.NODE_TASKS).child(dateValue);
         String key = getTaskKey();
         BaseTask task = getSampleTask(key, taskName, taskDetails, dueDate, hasAlarms, priority);
-        dbRef.child(Constants.NODE_USERS).child(user).child(Constants.NODE_TASKS)
+        dbRef.child(Constants.NODE_USERS).child(user).child(Constants.NODE_TASKS).child(dateValue)
                 .child(key).setValue(task, new DatabaseReference.CompletionListener() {
             @Override
             public void onComplete(@Nullable DatabaseError databaseError,

@@ -2,9 +2,9 @@
     <string name="app_name">FinalTest</string>
 
     <string-array name="priorities">
-        <item>Not Important &amp; Not Urgent</item>
-        <item>Important but Not Urgent</item>
-        <item>Not Important but Urgent</item>
         <item>Important &amp; Urgent</item>
+        <item>Not Important but Urgent</item>
+        <item>Important but Not Urgent</item>
+        <item>Not Important &amp; Not Urgent</item>
     </string-array>
 </resources>
