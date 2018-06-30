@@ -30,4 +30,19 @@ public enum TaskPriority {
                 return NOT_IMP_NOT_URG;
         }
     }
+
+    public static String parseString(int status) {
+        switch (status) {
+            case 0:
+                return "Important & Urgent";
+            case 1:
+                return "Not Important but Urgent";
+            case 2:
+                return "Important but Not Urgent";
+            case 3:
+                return "Not Important & Not Urgent";
+            default:
+                return "Wrong Priority";
+        }
+    }
 }

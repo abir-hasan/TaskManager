@@ -6,4 +6,6 @@
 
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
+    <color name="gray">#BEBEBE</color>
+    <color name="gray_dark">#818285</color>
 </resources>

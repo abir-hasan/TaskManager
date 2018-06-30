@@ -36,8 +36,9 @@ public class DashBoardViewModel extends ViewModel {
 
     @NonNull
     public LiveData<List<BaseTask>> getMessageListLiveData(String user, String date, DatabaseReference dataRef) {
-        dataRef = dataRef.child(Constants.NODE_USERS).child(user).child(Constants.NODE_TASKS).child(date);
-        mLiveData = new FirebaseQueryLiveData(dataRef);
+        Query query = dataRef.child(Constants.NODE_USERS).child(user).child(Constants.NODE_TASKS)
+                .child(date).orderByChild(Constants.NODE_PRIORITY);
+        mLiveData = new FirebaseQueryLiveData(query);
         return Transformations.map(mLiveData,
                 new Deserializer());
     }

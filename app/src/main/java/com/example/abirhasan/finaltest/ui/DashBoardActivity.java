@@ -9,6 +9,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -21,6 +24,7 @@ import com.example.abirhasan.finaltest.dagger.dashboard_activity.DashBoardActivi
 import com.example.abirhasan.finaltest.models.BaseTask;
 import com.example.abirhasan.finaltest.ui.adapters.DashBoardAdapter;
 import com.example.abirhasan.finaltest.utils.AppUtils;
+import com.example.abirhasan.finaltest.utils.Constants;
 import com.example.abirhasan.finaltest.view_models.DashBoardViewModel;
 import com.google.firebase.database.DatabaseReference;
 
@@ -36,6 +40,7 @@ import butterknife.OnItemSelected;
 
 public class DashBoardActivity extends AppCompatActivity {
     private static final String TAG = "DashBoardActivity";
+    private String selectedDate;
     private String user;
     @BindView(R.id.fabAddTask)
     FloatingActionButton fabAddTask;
@@ -54,6 +59,7 @@ public class DashBoardActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dash_board);
+        setTitle("Task Board");
         initDependency();
         ButterKnife.bind(this);
         user = AppUtils.getUser(this);
@@ -101,13 +107,35 @@ public class DashBoardActivity extends AppCompatActivity {
 
     @OnItemSelected(R.id.spTaskDates)
     public void onItemSelect(AdapterView<?> parent, View view, int position, long id) {
-        String value = String.valueOf(parent.getAdapter().getItem(position));
-        observeData(value);
-        Log.d(TAG, "onItemSelect: " + value);
+        selectedDate = String.valueOf(parent.getAdapter().getItem(position));
+        observeData(selectedDate);
+        Log.d(TAG, "onItemSelect: " + selectedDate);
     }
 
     @OnClick(R.id.fabAddTask)
     public void onAddTaskClick() {
         startActivity(new Intent(DashBoardActivity.this, AddTaskActivity.class));
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_dash_board, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.status_board) {
+            goToStatusBoard();
+        }
+        return true;
+    }
+
+    private void goToStatusBoard() {
+        if (selectedDate.isEmpty()) return;
+        Intent intent = new Intent(this, StatusBoardActivity.class);
+        intent.putExtra(Constants.KEY_TASK_DATE, selectedDate);
+        startActivity(intent);
     }
 }

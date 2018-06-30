@@ -47,7 +47,7 @@ public class FirebaseQueryLiveData extends LiveData<DataSnapshot> {
         if (listenerRemovePending) {
             handler.removeCallbacks(removeListener);
         } else {
-            query.orderByChild("priority").addValueEventListener(valueListener);
+            query.addValueEventListener(valueListener);
         }
         listenerRemovePending = false;
     }

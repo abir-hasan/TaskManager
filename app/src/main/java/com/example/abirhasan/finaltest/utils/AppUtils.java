@@ -15,9 +15,16 @@ public class AppUtils {
         return prefs.getString(Constants.USER_NAME_KEY, null);
     }
 
-    public static SimpleDateFormat getFormat(){
-        return  new SimpleDateFormat("dd-MMM-yyyy",
+    public static SimpleDateFormat getFormat() {
+        return new SimpleDateFormat("dd-MMM-yyyy",
                 Locale.getDefault());
+
+    }
+
+    public static String getFormattedDate(long dueDate) {
+        SimpleDateFormat format = new SimpleDateFormat("dd-MMM-yyyy",
+                Locale.getDefault());
+        return format.format(dueDate);
 
     }
 }
