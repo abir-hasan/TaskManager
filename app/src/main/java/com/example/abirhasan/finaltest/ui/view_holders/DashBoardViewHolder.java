@@ -40,10 +40,10 @@ public class DashBoardViewHolder extends RecyclerView.ViewHolder {
         this.baseTask = baseTask;
         tvTaskName.setText(baseTask.getTitle());
         taskDetails.setText(baseTask.getDetails());
-       /* String priority = TaskPriority.parseString(baseTask.getPriority());
+        String priority = TaskPriority.parseString(baseTask.getPriority());
         String status = Status.parse(baseTask.getStatus()).toString();
         tvTaskPriority.setText(priority);
-        tvTaskStatus.setText(status);*/
+        tvTaskStatus.setText(status);
     }
 
     @OnClick(R.id.clView)
