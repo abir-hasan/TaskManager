@@ -57,19 +57,19 @@ public class DashBoardViewModel extends ViewModel {
                 if (isFirstImpUrg && msg.getPriority() == TaskPriority.IMP_URG.getStatus()) {
                     msg.setSection(true);
                     isFirstImpUrg = false;
-                    //mList.add(getTask(msg.getPriority()));
+                    mList.add(getTask(msg.getPriority()));
                 } else if (isFirstNotImpUrg && msg.getPriority() == TaskPriority.NOT_IMP_URG.getStatus()) {
                     msg.setSection(true);
                     isFirstNotImpUrg = false;
-                    //mList.add(getTask(msg.getPriority()));
+                    mList.add(getTask(msg.getPriority()));
                 } else if (isFirstImpNotUrg && msg.getPriority() == TaskPriority.IMP_NOT_URG.getStatus()) {
                     msg.setSection(true);
                     isFirstImpNotUrg = false;
-                    //mList.add(getTask(msg.getPriority()));
+                    mList.add(getTask(msg.getPriority()));
                 } else if (isFirstNotImpNotUrg && msg.getPriority() == TaskPriority.NOT_IMP_NOT_URG.getStatus()) {
                     msg.setSection(true);
                     isFirstNotImpNotUrg = false;
-                    //mList.add(getTask(msg.getPriority()));
+                    mList.add(getTask(msg.getPriority()));
                 }
                 mList.add(msg);
             }
