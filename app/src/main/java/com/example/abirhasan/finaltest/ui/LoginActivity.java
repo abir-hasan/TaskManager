@@ -9,9 +9,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.abirhasan.finaltest.utils.Constants;
 import com.example.abirhasan.finaltest.R;
 import com.example.abirhasan.finaltest.utils.AppUtils;
+import com.example.abirhasan.finaltest.utils.Constants;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,8 +32,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void checkIfUserLoggedIn() {
-        /*SharedPreferences prefs = getSharedPreferences(Constants.MY_PREFS_NAME, MODE_PRIVATE);
-        String userName = prefs.getString(Constants.USER_NAME_KEY, null);*/
         String userName = AppUtils.getUser(this);
         if (userName != null) {
             goToDashBoard();

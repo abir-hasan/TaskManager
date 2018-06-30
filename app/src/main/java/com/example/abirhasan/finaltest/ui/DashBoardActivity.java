@@ -2,6 +2,7 @@ package com.example.abirhasan.finaltest.ui;
 
 import android.arch.lifecycle.Observer;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -85,6 +86,7 @@ public class DashBoardActivity extends AppCompatActivity {
             @Override
             public void onChanged(@Nullable List<String> strings) {
                 if (strings != null) {
+                    spTaskDates.setVisibility(View.VISIBLE);
                     ArrayAdapter<String> adapter = new ArrayAdapter<>(DashBoardActivity.this,
                             R.layout.support_simple_spinner_dropdown_item, strings);
                     spTaskDates.setAdapter(adapter);
@@ -128,12 +130,23 @@ public class DashBoardActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.status_board) {
             goToStatusBoard();
+        } else {
+            doLogOut();
         }
         return true;
     }
 
+    private void doLogOut() {
+        SharedPreferences.Editor editor = getSharedPreferences(Constants.MY_PREFS_NAME,
+                MODE_PRIVATE).edit();
+        editor.clear();
+        editor.apply();
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+    }
+
     private void goToStatusBoard() {
-        if (selectedDate.isEmpty()) return;
+        if (selectedDate == null || selectedDate.isEmpty()) return;
         Intent intent = new Intent(this, StatusBoardActivity.class);
         intent.putExtra(Constants.KEY_TASK_DATE, selectedDate);
         startActivity(intent);
