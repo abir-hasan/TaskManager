@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
         task.setDueDate(112312);
         task.setHasAlarm(false);
         task.setPriority(TaskPriority.IMP_URG.getStatus());
-        task.setStatus(Status.TO_DO.getStatus());
+        task.setStatus(Status.TODO.getStatus());
         return task;
     }
 }

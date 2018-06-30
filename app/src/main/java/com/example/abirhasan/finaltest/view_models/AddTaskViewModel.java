@@ -5,10 +5,13 @@ import android.arch.lifecycle.ViewModel;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.example.abirhasan.finaltest.utils.Constants;
 import com.example.abirhasan.finaltest.enums.Status;
 import com.example.abirhasan.finaltest.enums.TaskPriority;
 import com.example.abirhasan.finaltest.models.BaseTask;
+import com.example.abirhasan.finaltest.utils.AppUtils;
+import com.example.abirhasan.finaltest.utils.Constants;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 
@@ -42,6 +45,23 @@ public class AddTaskViewModel extends ViewModel {
         });
     }
 
+    public void editData(DatabaseReference dbRef, String user, BaseTask baseTask) {
+        String dateValue = AppUtils.getFormat().format(baseTask.getDueDate());
+        dbRef.child(Constants.NODE_USERS).child(user).child(Constants.NODE_TASKS).child(dateValue)
+                .child(baseTask.getTaskId())
+                .setValue(baseTask).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                isTaskAdded.postValue(true);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                isTaskAdded.postValue(false);
+            }
+        });
+    }
+
     private String getTaskKey() {
         return userRef.push().getKey();
     }
@@ -55,7 +75,7 @@ public class AddTaskViewModel extends ViewModel {
         task.setDueDate(dueDate);
         task.setHasAlarm(hasAlarms);
         task.setPriority(priority.getStatus());
-        task.setStatus(Status.TO_DO.getStatus());
+        task.setStatus(Status.TODO.getStatus());
         return task;
     }
 }

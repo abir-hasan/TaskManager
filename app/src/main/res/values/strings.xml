@@ -7,4 +7,10 @@
         <item>Important but Not Urgent</item>
         <item>Not Important &amp; Not Urgent</item>
     </string-array>
+
+    <string-array name="task_status">
+        <item>To Do</item>
+        <item>Doing</item>
+        <item>Done</item>
+    </string-array>
 </resources>
