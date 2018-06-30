@@ -29,10 +29,10 @@ public class DashBoardViewModel extends ViewModel {
     private List<BaseTask> mList = new ArrayList<>();
     private List<String> taskDates = new ArrayList<>();
     private MutableLiveData<List<String>> taskDatesLiveData;
-    private boolean isFirstImpUrg = true;
-    private boolean isFirstNotImpUrg = true;
-    private boolean isFirstImpNotUrg = true;
-    private boolean isFirstNotImpNotUrg = true;
+    private boolean isFirstImpUrg;
+    private boolean isFirstNotImpUrg;
+    private boolean isFirstImpNotUrg;
+    private boolean isFirstNotImpNotUrg;
 
     @NonNull
     public LiveData<List<BaseTask>> getMessageListLiveData(String user, String date, DatabaseReference dataRef) {
@@ -48,20 +48,28 @@ public class DashBoardViewModel extends ViewModel {
         public List<BaseTask> apply(DataSnapshot dataSnapshot) {
             Log.w(TAG, "apply() called with: dataSnapshot = [" + dataSnapshot + "]");
             mList.clear();
+            isFirstImpUrg = true;
+            isFirstNotImpUrg = true;
+            isFirstImpNotUrg = true;
+            isFirstNotImpNotUrg = true;
             for (DataSnapshot snap : dataSnapshot.getChildren()) {
                 BaseTask msg = snap.getValue(BaseTask.class);
                 if (isFirstImpUrg && msg.getPriority() == TaskPriority.IMP_URG.getStatus()) {
                     msg.setSection(true);
                     isFirstImpUrg = false;
+                    //mList.add(getTask(msg.getPriority()));
                 } else if (isFirstNotImpUrg && msg.getPriority() == TaskPriority.NOT_IMP_URG.getStatus()) {
                     msg.setSection(true);
                     isFirstNotImpUrg = false;
+                    //mList.add(getTask(msg.getPriority()));
                 } else if (isFirstImpNotUrg && msg.getPriority() == TaskPriority.IMP_NOT_URG.getStatus()) {
                     msg.setSection(true);
                     isFirstImpNotUrg = false;
+                    //mList.add(getTask(msg.getPriority()));
                 } else if (isFirstNotImpNotUrg && msg.getPriority() == TaskPriority.NOT_IMP_NOT_URG.getStatus()) {
                     msg.setSection(true);
                     isFirstNotImpNotUrg = false;
+                    //mList.add(getTask(msg.getPriority()));
                 }
                 mList.add(msg);
             }
@@ -99,5 +107,12 @@ public class DashBoardViewModel extends ViewModel {
 
             }
         });
+    }
+
+    private BaseTask getTask(int priority) {
+        BaseTask task = new BaseTask();
+        task.setTitle(TaskPriority.parseString(priority));
+        task.setTaskId(String.valueOf(priority));
+        return task;
     }
 }
